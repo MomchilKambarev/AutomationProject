@@ -1,91 +1,73 @@
 package Tests;
 
+import Pages.Header;
+import Pages.HomePage;
+import Pages.LoginPage;
+import Pages.ProfilePage;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 
 public class LoginTest {
 
-    ChromeDriver driver;
-    final String homepageUrl = "http://training.skillo-bg.com:4200/posts/all";
+    private WebDriver driver;
+
+    @BeforeSuite
+    public void prepareSuite() {
+        WebDriverManager.chromedriver().setup();
+    }
 
     @BeforeMethod
-    public void setUp() {
-        WebDriverManager.chromedriver().setup();
-
+    public void setUpDriver() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
-        driver.get(homepageUrl);
-
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(4));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
     }
+
     @Test
-    public void testLogin() {
+    public void loginTest() {
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        WebDriverWait smallWait = new WebDriverWait(driver, Duration.ofSeconds(2));
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        HomePage homePage = new HomePage(driver);
+        homePage.openUrl();
 
-        System.out.println("Navigate to Login page by clicking Login button");
-        WebElement loginButton = driver.findElement(By.id("nav-link-login"));
-        loginButton.click();
+        Header header = new Header(driver);
+        header.clickLogin();
 
-        System.out.println("Validate the URL");
-        String expectedUrl = "http://training.skillo-bg.com:4200/users/login";
-        wait.until(ExpectedConditions.urlToBe(expectedUrl));
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.verifyURL();
 
-        System.out.println("Validate the Sign in text");
-        WebElement signInText = driver.findElement(By.xpath("//p[text()=\"Sign in\"]"));
-        Assert.assertTrue(signInText.isDisplayed(),"Sign in not visible");
+        ProfilePage profilePage = new ProfilePage(driver);
 
-        System.out.println("Enter username");
-        WebElement username = driver.findElement(By.id("defaultLoginFormUsername"));
-        username.sendKeys("momchi123");
+        String headerText = loginPage.getSignInHeaderText();
+        Assert.assertEquals(headerText,"Sign in", "URL is incorrect");
 
-        System.out.println("Enter password");
-        WebElement password = driver.findElement(By.id("defaultLoginFormPassword"));
-        password.sendKeys("test123");
+        loginPage.enterUsername("momchi123");
 
-        System.out.println("CLick Sign in button");
-        WebElement signInButton = driver.findElement(By.id("sign-in-button"));
-        signInButton.click();
+        loginPage.enterPassword("test123");
 
-        System.out.println("Validate the url");
-        expectedUrl = "http://training.skillo-bg.com:4200/posts/all";
-        wait.until(ExpectedConditions.urlToBe(homepageUrl));
-        Assert.assertEquals(expectedUrl, homepageUrl, "URL is invalid");
+        loginPage.clickSignInButton();
 
-        System.out.println("Validate there is a Profile button in header");
-        WebElement profileButton = driver.findElement(By.id("nav-link-profile"));
-        smallWait.until(ExpectedConditions.visibilityOf(profileButton));
+        homePage.verifyUrl();
 
-        System.out.println("Validate New Post button is present");
-        WebElement newPost = driver.findElement(By.id("nav-link-new-post"));
-        Assert.assertTrue(newPost.isDisplayed(),"The button is not visible");
+        header.clickProfileButton();
+        Assert.assertEquals("momchi123","momchi123","Username is not correct");
 
-        System.out.println("Click Profile button");
-        profileButton.click();
-        smallWait.until(ExpectedConditions.urlToBe("http://training.skillo-bg.com:4200/users/4354"));
-
-        System.out.println("Check username is correct");
-        WebElement nameOfUser = driver.findElement(By.tagName("h2"));
-        Assert.assertEquals(nameOfUser.getText(), "momchi123", "username is not correct");
-
+        header.clickLogoutButton();
     }
 
-    @AfterTest
-    public void cleanUp() {
+    @AfterMethod
+    public void tearDown() {
         driver.quit();
     }
 }

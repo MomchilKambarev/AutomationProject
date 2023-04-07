@@ -1,7 +1,0 @@
-<suite name="Login test suite" verbose="1">
-    <test name="Login Test">
-        <classes>
-            <class name="Tests.LoginTest"></class>
-        </classes>
-    </test>
-</suite>
