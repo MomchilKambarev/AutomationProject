@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: Tests.RegistrationTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 3.343 sec <<< FAILURE!
+registration(Tests.RegistrationTest)  Time elapsed: 0.005 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "org.openqa.selenium.WebDriver.manage()" because "this.driver" is null
+	at Tests.RegistrationTest.registration(RegistrationTest.java:37)
+
+tearDown(Tests.RegistrationTest)  Time elapsed: 0.006 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "org.openqa.selenium.WebDriver.quit()" because "this.driver" is null
+	at Tests.RegistrationTest.tearDown(RegistrationTest.java:45)
+
