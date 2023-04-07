@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class ProfilePage {
 
@@ -21,6 +22,9 @@ public class ProfilePage {
     @FindBy(tagName = "h2")
     WebElement profileName;
 
+    @FindBy(css = "app-post")
+    List<WebElement> existingPosts;
+
 
     public ProfilePage(WebDriver driver) {
         this.driver = driver;
@@ -32,11 +36,21 @@ public class ProfilePage {
         wait.until(ExpectedConditions.elementToBeClickable(editProfileButton));
         editProfileButton.click();
     }
-
     public String verifyUsername() {
         wait.until(ExpectedConditions.visibilityOf(profileName));
         return profileName.getText();
     }
+    public int getExistingPostsCount() {
+        return existingPosts.size();
+    }
 
+    public String getElementText(WebElement element) {
+        wait.until(ExpectedConditions.visibilityOf(element));
+        return element.getText();
+    }
+
+    public void openPostByIndex(int index) {
+        getElementText(existingPosts.get(index));
+    }
 
 }

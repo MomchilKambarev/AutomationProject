@@ -13,7 +13,7 @@ public class Header {
 
     private final WebDriver driver;
 
-    private WebDriverWait wait;
+    final private WebDriverWait wait;
 
     @FindBy(id = "homeIcon")
     WebElement logoButton;
@@ -26,6 +26,9 @@ public class Header {
 
     @FindBy(id = "nav-link-profile")
     WebElement profileButton;
+
+    @FindBy(id = "nav-link-new-post")
+    WebElement newPostButton;
 
     @FindBy(xpath = "//header/nav[1]/div[1]/div[1]/ul[2]/li[1]/a[1]/i[1]")
     WebElement logoutButton;
@@ -60,6 +63,11 @@ public class Header {
     public void clickLogoutButton() {
         wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
         logoutButton.click();
+    }
+
+    public void clickNewPostButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(newPostButton));
+        newPostButton.click();
     }
 
 }
