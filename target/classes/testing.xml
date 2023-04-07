@@ -1,0 +1,11 @@
+<suite name="Automation training test suite" verbose="1">
+    <test name="Regression tests">
+        <classes>
+            <class name="Tests.ChangeProfileInfoTest"></class>
+            <class name="Tests.DeletePostTest"></class>
+            <class name="Tests.LoginTest"></class>
+            <class name="Tests.NewPostTest"></class>
+            <class name="Tests.RegistrationTest"></class>
+        </classes>
+    </test>
+</suite>
