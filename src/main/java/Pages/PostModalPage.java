@@ -19,6 +19,12 @@ public class PostModalPage {
     @FindBy(tagName = "app-post-modal")
     WebElement modalDialog;
 
+    @FindBy(xpath = "//textarea[@formcontrolname='publicInfo']")
+    WebElement infoText;
+
+    @FindBy(xpath = "//button[@class='btn btn-primary']")
+    WebElement saveButton;
+
     public PostModalPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -35,6 +41,18 @@ public class PostModalPage {
 
     public String getPostUsername() {
         return getElementText(usernameLink);
+    }
+
+    public void deleteInfo(){
+        infoText.clear();
+    }
+
+    public void changePublicInfo() {
+        infoText.sendKeys("hellooouu");
+    }
+
+    public void clickSaveButton() {
+        saveButton.click();
     }
 
 }

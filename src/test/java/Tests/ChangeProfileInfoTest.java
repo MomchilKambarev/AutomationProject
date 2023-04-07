@@ -1,9 +1,6 @@
 package Tests;
 
-import Pages.Header;
-import Pages.HomePage;
-import Pages.LoginPage;
-import Pages.ProfilePage;
+import Pages.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -12,7 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import java.time.Duration;
 
-public class LoginTest {
+public class ChangeProfileInfoTest {
     private WebDriver driver;
 
     @BeforeSuite
@@ -58,7 +55,17 @@ public class LoginTest {
         header.clickProfileButton();
         Assert.assertEquals("momchi321","momchi321","Username is not correct");
 
-        header.clickLogoutButton();
+        profilePage.clickEditProfileButton();
+
+        System.out.println("Open modal and clear public info");
+        PostModalPage postModalPage = new PostModalPage(driver);
+        postModalPage.deleteInfo();
+
+        System.out.println("Fill public info with new text");
+        postModalPage.changePublicInfo();
+
+        System.out.println("Save profile afte changes");
+        postModalPage.clickSaveButton();
     }
 
     @AfterMethod

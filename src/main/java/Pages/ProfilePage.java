@@ -16,7 +16,7 @@ public class ProfilePage {
 
     WebDriverWait wait;
 
-    @FindBy(tagName = "i")
+    @FindBy(xpath = "//*[contains(@class, 'fas fa-user-edit ng-star-inserted')]")
     WebElement editProfileButton;
 
     @FindBy(tagName = "h2")
