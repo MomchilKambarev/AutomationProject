@@ -28,7 +28,7 @@ public class ChangeProfileInfoTest {
     }
 
     @Test
-    public void loginTest() {
+    public void changeProfileInfoTest() {
 
         HomePage homePage = new HomePage(driver);
         homePage.openUrl();

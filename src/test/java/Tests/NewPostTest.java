@@ -33,7 +33,7 @@ public class NewPostTest {
     @DataProvider(name = "getData")
     public Object[][] getData() {
         return new Object[][] {
-              {"momchi123", "test123", new File("src/main/resources/handshake.jpeg"),"some caption text"}
+              {"momchi321", "test123", new File("src/main/resources/handshake.jpeg"),"some caption text"}
         };
     }
 
