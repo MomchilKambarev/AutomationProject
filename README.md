@@ -20,4 +20,4 @@ TestCase 3: Create a new post
 
 TestCase 4: Delete post
 
-TestCase 5: Change profile's password
+TestCase 5: Change profile's info
