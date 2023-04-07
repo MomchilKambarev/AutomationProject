@@ -25,6 +25,15 @@ public class ProfilePage {
     @FindBy(css = "app-post")
     List<WebElement> existingPosts;
 
+    @FindBy(xpath = "//*[contains(@class, 'post-img')]")
+    WebElement postedImage;
+
+    @FindBy(xpath = "//a[contains(text(),'Delete post')]")
+    WebElement deletePostButton;
+
+    @FindBy(xpath = "//button[contains(text(),'Yes')]")
+    WebElement confirmDeleteButton;
+
 
     public ProfilePage(WebDriver driver) {
         this.driver = driver;
@@ -51,6 +60,18 @@ public class ProfilePage {
 
     public void openPostByIndex(int index) {
         getElementText(existingPosts.get(index));
+    }
+
+    public void clickPostedImage() {
+        postedImage.click();
+    }
+
+    public void clickDeletePostButton() {
+        deletePostButton.click();
+    }
+
+    public void clickConfirmDeleteButton() {
+        confirmDeleteButton.click();
     }
 
 }

@@ -39,7 +39,7 @@ public class DeletePostTest {
     }
 
     @Test(dataProvider = "getData")
-    public void createNewPostTest(String username, String password, File file, String captionText) {
+    public void deletePostTest(String username, String password, File file, String captionText) {
 
         System.out.println("Open page");
         HomePage homePage = new HomePage(driver);
@@ -87,9 +87,13 @@ public class DeletePostTest {
         Assert.assertEquals(existingPosts, initialPosts + 1, "Incorrect posts count!");
 
         System.out.println("Open newly created post");
-        profilePage.openPostByIndex(existingPosts - 1);
+        profilePage.clickPostedImage();
 
+        System.out.println("Delete the post");
+        profilePage.clickDeletePostButton();
 
+        System.out.println("Confirm delete post");
+        profilePage.clickConfirmDeleteButton();
 
     }
 }
